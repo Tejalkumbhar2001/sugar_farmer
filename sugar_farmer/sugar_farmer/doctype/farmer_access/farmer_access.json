@@ -1,0 +1,243 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2024-03-22 12:40:39.178892",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "column_break_vo5q6",
+  "naming_series",
+  "column_break_wwfx4",
+  "date",
+  "section_break_4lpad",
+  "circle_office",
+  "column_break_ifdt2",
+  "village",
+  "column_break_k8gru",
+  "farmer",
+  "column_break_nqspa",
+  "plant",
+  "set_farmer_email_section",
+  "email",
+  "column_break_csxpv",
+  "password",
+  "farmer_details_section",
+  "vendor_code",
+  "farmer_village",
+  "aadhaar_number",
+  "column_break_jwifw",
+  "vendor_group",
+  "taluka",
+  "mobile",
+  "column_break_jvh7o",
+  "vendor_name",
+  "state",
+  "pan_number",
+  "doc_user",
+  "doc_user_permission",
+  "doc_user_perm"
+ ],
+ "fields": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_vo5q6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "Farmer-"
+  },
+  {
+   "fieldname": "column_break_wwfx4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "section_break_4lpad",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "circle_office",
+   "fieldtype": "Link",
+   "label": "Circle Office",
+   "options": "Circle Office"
+  },
+  {
+   "fieldname": "column_break_ifdt2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "village",
+   "fieldtype": "Link",
+   "label": "Village",
+   "options": "Village"
+  },
+  {
+   "fieldname": "column_break_k8gru",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "farmer",
+   "fieldtype": "Link",
+   "label": "Farmer",
+   "options": "Farmer List"
+  },
+  {
+   "fieldname": "column_break_nqspa",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "farmer.branch",
+   "fieldname": "plant",
+   "fieldtype": "Data",
+   "label": "Plant "
+  },
+  {
+   "fieldname": "set_farmer_email_section",
+   "fieldtype": "Section Break",
+   "label": "Set Farmer Email"
+  },
+  {
+   "fieldname": "farmer_details_section",
+   "fieldtype": "Section Break",
+   "label": "Farmer Details"
+  },
+  {
+   "fetch_from": "farmer.existing_supplier_code",
+   "fieldname": "vendor_code",
+   "fieldtype": "Data",
+   "label": "Vendor Code"
+  },
+  {
+   "fetch_from": "farmer.village",
+   "fieldname": "farmer_village",
+   "fieldtype": "Data",
+   "label": "Village"
+  },
+  {
+   "fetch_from": "farmer.aadhaar_number",
+   "fieldname": "aadhaar_number",
+   "fieldtype": "Data",
+   "label": "Aadhaar Number"
+  },
+  {
+   "fieldname": "column_break_jwifw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "farmer.supplier_group",
+   "fieldname": "vendor_group",
+   "fieldtype": "Data",
+   "label": "Vendor Group"
+  },
+  {
+   "fetch_from": "farmer.taluka",
+   "fieldname": "taluka",
+   "fieldtype": "Data",
+   "label": "Taluka"
+  },
+  {
+   "fieldname": "column_break_jvh7o",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "farmer.supplier_name",
+   "fieldname": "vendor_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Vendor Name",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "farmer.state",
+   "fieldname": "state",
+   "fieldtype": "Data",
+   "label": "State"
+  },
+  {
+   "fetch_from": "farmer.pan_number",
+   "fieldname": "pan_number",
+   "fieldtype": "Data",
+   "label": "PAN Number"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Email Id",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "farmer.mobile_number",
+   "fieldname": "mobile",
+   "fieldtype": "Data",
+   "label": "Mobile Number"
+  },
+  {
+   "fieldname": "column_break_csxpv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "password",
+   "fieldtype": "Data",
+   "label": "Set Password"
+  },
+  {
+   "fieldname": "doc_user",
+   "fieldtype": "Data",
+   "label": " doc user"
+  },
+  {
+   "fieldname": "doc_user_permission",
+   "fieldtype": "Data",
+   "label": "doc user permission"
+  },
+  {
+   "fieldname": "doc_user_perm",
+   "fieldtype": "Data",
+   "label": "doc user perm"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-03-27 17:56:01.724804",
+ "modified_by": "Administrator",
+ "module": "Sugar Farmer",
+ "name": "Farmer Access",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
