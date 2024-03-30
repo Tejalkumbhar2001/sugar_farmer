@@ -49,9 +49,19 @@ def login(usr, pwd):
         login_manager.post_login()
         if frappe.response["message"] == "Logged In":
             frappe.response["user"] = login_manager.user
+            frappe.response["farmer_id"] = farmer_id()
             frappe.response["key_details"] = generate_key(login_manager.user)
         gen_response(200, frappe.response["message"])
     except frappe.AuthenticationError:
         gen_response(500, frappe.response["message"])
     except Exception as e:
         return exception_handel(e)
+
+
+@frappe.whitelist()
+def farmer_id():
+    user_doc=frappe.get_doc("User",frappe.session.user)
+    mobile=user_doc.mobile_no
+    farmer_id=frappe.get_value("Farmer Access",{"email":frappe.session.user,"mobile":mobile},"farmer")
+    if farmer_id:
+        return farmer_id
