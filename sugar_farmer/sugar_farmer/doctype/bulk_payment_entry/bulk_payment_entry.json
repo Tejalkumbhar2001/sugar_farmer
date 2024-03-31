@@ -20,9 +20,9 @@
   "section_break_xfhbx",
   "payment_reference",
   "section_break_c5bjt",
-  "advance_taxes_and_charges",
+  "taxes",
   "section_break_bph2b",
-  "payment_entry_deduction",
+  "deduction",
   "amended_from"
  ],
  "fields": [
@@ -37,7 +37,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Payment Type",
-   "options": "Receive\nPay\nInternal Transfer",
+   "options": "Pay\nReceive\nInternal Transfer",
    "reqd": 1
   },
   {
@@ -100,20 +100,8 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "advance_taxes_and_charges",
-   "fieldtype": "Table",
-   "label": "Advance Taxes and Charges",
-   "options": "Bulk Advance Taxes and Charges"
-  },
-  {
    "fieldname": "section_break_bph2b",
    "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "payment_entry_deduction",
-   "fieldtype": "Table",
-   "label": "Payment Entry Deduction",
-   "options": "Bulk Payment Entry Deduction"
   },
   {
    "fieldname": "amended_from",
@@ -123,6 +111,18 @@
    "options": "Bulk Payment Entry",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "taxes",
+   "fieldtype": "Table",
+   "label": "Advance Taxes and Charges",
+   "options": "Bulk Advance Taxes and Charges"
+  },
+  {
+   "fieldname": "deduction",
+   "fieldtype": "Table",
+   "label": "Payment Entry Deduction",
+   "options": "Bulk Payment Entry Deduction"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -133,7 +133,7 @@
    "link_fieldname": "custom_bulk_payment_entry"
   }
  ],
- "modified": "2024-03-27 18:24:58.906329",
+ "modified": "2024-03-31 11:37:45.122370",
  "modified_by": "Administrator",
  "module": "Sugar Farmer",
  "name": "Bulk Payment Entry",

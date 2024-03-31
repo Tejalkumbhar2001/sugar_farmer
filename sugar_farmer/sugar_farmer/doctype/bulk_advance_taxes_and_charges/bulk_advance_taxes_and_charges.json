@@ -7,6 +7,9 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "party_type",
+  "party",
+  "party_name",
   "add_deduct_tax",
   "charge_type",
   "row_id",
@@ -26,7 +29,8 @@
   "allocated_amount",
   "column_break_13",
   "base_tax_amount",
-  "base_total"
+  "base_total",
+  "reference_id"
  ],
  "fields": [
   {
@@ -73,6 +77,7 @@
    "width": "50%"
   },
   {
+   "fetch_from": "account_head.account_name",
    "fieldname": "description",
    "fieldtype": "Small Text",
    "label": "Description",
@@ -117,7 +122,8 @@
    "in_list_view": 1,
    "label": "Rate",
    "oldfieldname": "rate",
-   "oldfieldtype": "Currency"
+   "oldfieldtype": "Currency",
+   "read_only_depends_on": "eval: doc.charge_type ==\"Actual\""
   },
   {
    "fieldname": "section_break_9",
@@ -137,7 +143,8 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Amount",
-   "options": "currency"
+   "options": "currency",
+   "read_only_depends_on": "eval: doc.charge_type ==\"On Paid Amount\""
   },
   {
    "columns": 2,
@@ -175,12 +182,39 @@
    "oldfieldtype": "Currency",
    "options": "Company:company:default_currency",
    "read_only": 1
+  },
+  {
+   "fieldname": "party_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Party Type",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "party",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Party",
+   "options": "party_type"
+  },
+  {
+   "fieldname": "party_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Party Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reference_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Reference Id"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-03-27 17:56:03.834708",
+ "modified": "2024-03-31 12:31:36.790648",
  "modified_by": "Administrator",
  "module": "Sugar Farmer",
  "name": "Bulk Advance Taxes and Charges",

@@ -15,7 +15,7 @@ frappe.ui.form.on('Bulk Payment Entry', {
         frm.fields_dict['bulk_payment_entry_details'].grid.get_field('party_type').get_query = function(doc, cdt, cdn) {
             return {
                 filters: [
-                    ['DocType', 'name','in', ['Customer', 'Supplier', 'Shareholder', 'Employee']]
+                    ['DocType', 'name','in', ['Supplier','Customer',  'Shareholder', 'Employee']]
                 ]
             };
         };
@@ -23,6 +23,29 @@ frappe.ui.form.on('Bulk Payment Entry', {
 });
 
 
+frappe.ui.form.on('Bulk Payment Entry', {
+	setup: function(frm, cdt, cdn) {
+		  frm.fields_dict['deduction'].grid.get_field('party_type').get_query = function(doc, cdt, cdn) {
+			  return {
+				  filters: [
+					  ['DocType', 'name','in', ['Customer', 'Supplier', 'Shareholder', 'Employee']]
+				  ]
+			  };
+		  };
+	  }
+  });
+  
+  frappe.ui.form.on('Bulk Payment Entry', {
+	setup: function(frm, cdt, cdn) {
+		  frm.fields_dict['taxes'].grid.get_field('party_type').get_query = function(doc, cdt, cdn) {
+			  return {
+				  filters: [
+					  ['DocType', 'name','in', ['Customer', 'Supplier', 'Shareholder', 'Employee']]
+				  ]
+			  };
+		  };
+	  }
+  });
 
 
 frappe.ui.form.on('Bulk Payment Entry', {
@@ -103,23 +126,109 @@ frappe.ui.form.on('Bulk Payment Entry Details', {
 	}
 });
 
-frappe.ui.form.on('Bulk Payment Reference', {
-    allocated_amount: function(frm, cdt, cdn) {   
-        frm.call({
-            method: 'get_allocatedsum',
-            doc: frm.doc
-        });
-    }
+frappe.ui.form.on('Bulk Payment Entry Deduction', {
+	party: function(frm,cdt,cdn) {   
+		frm.call({
+			method:'trigger_party',
+			doc:frm.doc
+		})
+	}
 });
 
-
-
-
-frappe.ui.form.on('Bulk Payment Reference', {
-    allocated_amount: function(frm, cdt, cdn) {   
-        frm.call({
-            method: 'check_yield',
-            doc: frm.doc
-        });
-    }
+frappe.ui.form.on('Bulk Advance Taxes and Charges', {
+	party: function(frm,cdt,cdn) {   
+		frm.call({
+			method:'trigger_party',
+			doc:frm.doc
+		})
+	}
 });
+
+frappe.ui.form.on('Bulk Payment Entry Deduction', {
+	deduction_add: function(frm,cdt,cdn) {   
+        frm.refresh_field("deduction")
+		frm.call({
+			method:'set_party_type',
+			doc:frm.doc
+		})
+        frm.clear_table("deduction");
+	}
+});
+
+frappe.ui.form.on('Bulk Advance Taxes and Charges', {
+	taxes_add: function(frm,cdt,cdn) {   
+        frm.refresh_field("deduction")
+		frm.call({
+			method:'set_party_type',
+			doc:frm.doc
+		})
+        frm.clear_table("deduction");
+	}
+});
+
+// frappe.ui.form.on('Bulk Payment Reference', {
+//     allocated_amount: function(frm, cdt, cdn) {   
+//         frm.call({
+//             method: 'check_yield',
+//             doc: frm.doc
+//         });
+//     }
+// });
+
+frappe.ui.form.on('Bulk Advance Taxes and Charges', {
+	tax_amount: function(frm) {
+		frm.call({
+			method:'calculate_taxes',
+			doc:frm.doc
+		})
+	}
+});
+
+// frappe.ui.form.on('Bulk Payment Entry', {
+// 	before_save: function(frm) {
+// 		frm.call({
+// 			method:'calculate_taxes',
+// 			doc:frm.doc
+// 		})
+// 	}
+// });
+frappe.ui.form.on('Bulk Advance Taxes and Charges', {
+	rate: function(frm,cdt,cdn) {   
+		frm.call({
+			method:'set_party_type',
+			doc:frm.doc
+		})
+	}
+});
+frappe.ui.form.on('Bulk Advance Taxes and Charges', {
+	tax_amount: function(frm,cdt,cdn) {   
+		frm.call({
+			method:'set_party_type',
+			doc:frm.doc
+		})
+	}
+});
+
+// frappe.ui.form.on('Bulk Payment Entry', {
+//     deduction_add: function(frm) {
+//         frappe.call({
+//             method: 'get_party_filter',
+//             doc: frm.doc,
+//             callback: function(r) {
+//                 if (r.message) {
+// 					frappe.msgprint(str(r.message))
+//                     var partyList = r.message;
+
+//                     frm.fields_dict.deduction.get_query = function(doc, cdt, cdn) {
+//                         return {
+//                             filters: [
+//                                 ['party', 'in', partyList],
+//                             ]
+//                         };
+//                     };
+//                 }
+//             }
+//         });
+//     }
+// });
+
