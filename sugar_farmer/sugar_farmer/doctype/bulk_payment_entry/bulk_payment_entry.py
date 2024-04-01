@@ -91,47 +91,7 @@ class BulkPaymentEntry(Document):
 			for m in self.get("taxes",filters={'party':j.party}):
 				m.reference_id = j.reference_id
      
-    
-     
-	# @frappe.whitelist()
-	# def calculate_taxes(self):
-	# 	for i in self.get("bulk_payment_entry_details"):
-	# 		for j in self.get("taxes",filters={'party':i.party,'reference_id':i.reference_id}):
-	# 			if j.add_deduct_tax =="Add" and j.charge_type =="Actual":
-	# 				j.total = float(i.paid_amount + j.tax_amount or 0)
-					
-	# 			elif j.add_deduct_tax =="Deduct" and j.charge_type =="Actual":
-	# 				j.total = float(i.paid_amount - j.tax_amount or 0)
-				
-	# 			elif j.add_deduct_tax =="Add" and j.charge_type =="On Paid Amount":
-	# 				j.tax_amount = float((j.rate/100)*i.paid_amount)
-	# 				j.total = float(i.paid_amount + j.tax_amount or 0)
-     
-	# 			elif j.add_deduct_tax =="Add" and j.charge_type =="On Paid Amount":
-	# 				j.tax_amount = float((j.rate/100)*i.paid_amount)
 
-	# @frappe.whitelist()
-	# def calculate_taxes(self):
-	# 	for i in self.get("bulk_payment_entry_details"):
-	# 		for j in self.get("taxes", filters={'party': i.party, 'reference_id': i.reference_id}):
-	# 			total_amount = 0
-
-	# 			if j.add_deduct_tax == "Add" and j.charge_type == "Actual":
-	# 				j.total = float(i.paid_amount + j.tax_amount or 0)
-	# 				j.rate = None
-	# 			elif j.add_deduct_tax == "Deduct" and j.charge_type == "Actual":
-	# 				j.total = float(i.paid_amount - j.tax_amount or 0)
-	# 				j.rate = None
-	# 			elif j.add_deduct_tax == "Add" and j.charge_type == "On Paid Amount":
-	# 				j.tax_amount = float(((j.rate / 100)) * (i.paid_amount or 0)) 			 
-	# 				j.total = float(i.paid_amount + j.tax_amount or 0)
-	# 				total_amount += j.tax_amount
-	# 				j.total = total_amount
-	# 			elif j.add_deduct_tax == "Deduct" and j.charge_type == "On Paid Amount":
-	# 				j.tax_amount = float((j.rate / 100) * (i.paid_amount or 0))  
-	# 				j.total = float(i.paid_amount - j.tax_amount or 0)
-	# 				total_amount += j.tax_amount
-	# 				j.total = total_amount
 
 
 	@frappe.whitelist()
@@ -216,7 +176,7 @@ class BulkPaymentEntry(Document):
 		self.get_entries_so()
 		self.get_entries_pi()
 		self.get_entries_po()
-		# self.get_allocatedsum()
+		
 		
 
 	@frappe.whitelist()
@@ -334,20 +294,48 @@ class BulkPaymentEntry(Document):
 				if i.check2 ==1 and i.party_type == "Supplier" and self.payment_type =="Receive":
 					frappe.throw("Cannot Receive from Supplier without any negative outstanding invoice")
 
+	@frappe.whitelist()
+	def allocated_trigger(self):
+		self.check_yield()
+		self.get_allocatedsum()
 
-
-	# @frappe.whitelist()
-	# def get_allocatedsum(self):
-	# 	# frappe.throw("hiiiii")
-	# 	for i in self.get("bulk_payment_entry_details"):
-	# 		total_asum = 0  # Initialize outside the loop
-	# 		for j in self.get("payment_reference", {'reference_id': i.reference_id}):
-	# 			allocated_amount = 0
-	# 			if j.allocated_amount:
-	# 				total_asum += j.allocated_amount  # Corrected increment operation
-	# 		i.paid_amount = total_asum
+	@frappe.whitelist()
+	def get_allocatedsum(self):
+		# frappe.throw("hiiiii")
+		for i in self.get("bulk_payment_entry_details"):
+			total_asum = 0  # Initialize outside the loop
+			for j in self.get("payment_reference", {'reference_id': i.reference_id}):
+				allocated_amount = 0
+				if j.allocated_amount:
+					total_asum += j.allocated_amount  
+			i.paid_amount = total_asum
 		
-  	
+		
+
+	
+	@frappe.whitelist()
+	def calculate_taxes(self):
+		for i in self.get("bulk_payment_entry_details"):
+			
+			for j in self.get("taxes", filters={'party': i.party, 'reference_id': i.reference_id}):
+				if j.add_deduct_tax == "Add" and j.charge_type == "Actual":
+					j.total = float(i.paid_amount + j.tax_amount or 0)
+					j.rate = None
+				elif j.add_deduct_tax == "Deduct" and j.charge_type == "Actual":
+					j.total = float(i.paid_amount - j.tax_amount or 0)
+					j.rate = None
+				elif j.add_deduct_tax == "Add" and j.charge_type == "On Paid Amount":
+					frappe.throw("hiii")
+					frappe.msgprint("hii")
+					j.tax_amount = float((j.rate / 100) * i.paid_amount or 0)
+					frappe.throw(str(j.tax_amount))
+					j.total = float(i.paid_amount + j.tax_amount or 0)
+					frappe.msgprint(str(j.total))
+				elif j.add_deduct_tax == "Deduct" and j.charge_type == "On Paid Amount":
+					j.tax_amount = float((j.rate / 100) * i.paid_amount or 0)
+					j.total = float(i.paid_amount - j.tax_amount or 0)
+			
+
 
 	@frappe.whitelist()
 	def check_yield(self):
