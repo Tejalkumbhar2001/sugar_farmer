@@ -166,14 +166,15 @@ frappe.ui.form.on('Bulk Advance Taxes and Charges', {
 	}
 });
 
-// frappe.ui.form.on('Bulk Payment Reference', {
-//     allocated_amount: function(frm, cdt, cdn) {   
-//         frm.call({
-//             method: 'check_yield',
-//             doc: frm.doc
-//         });
-//     }
-// });
+frappe.ui.form.on('Bulk Payment Reference', {
+    allocated_amount: function(frm, cdt, cdn) {   
+        frm.call({
+            method: 'allocated_trigger',
+            doc: frm.doc
+        });
+    }
+});
+
 
 frappe.ui.form.on('Bulk Advance Taxes and Charges', {
 	tax_amount: function(frm) {
@@ -184,30 +185,46 @@ frappe.ui.form.on('Bulk Advance Taxes and Charges', {
 	}
 });
 
-// frappe.ui.form.on('Bulk Payment Entry', {
-// 	before_save: function(frm) {
-// 		frm.call({
-// 			method:'calculate_taxes',
-// 			doc:frm.doc
-// 		})
-// 	}
-// });
+frappe.ui.form.on('Bulk Payment Entry', {
+	before_save: function(frm) {
+		frm.call({
+			method:'calculate_taxes',
+			doc:frm.doc
+		})
+	}
+});
 frappe.ui.form.on('Bulk Advance Taxes and Charges', {
 	rate: function(frm,cdt,cdn) {   
 		frm.call({
-			method:'set_party_type',
+			method:'calculate_taxes',
 			doc:frm.doc
 		})
 	}
 });
-frappe.ui.form.on('Bulk Advance Taxes and Charges', {
-	tax_amount: function(frm,cdt,cdn) {   
-		frm.call({
-			method:'set_party_type',
-			doc:frm.doc
-		})
-	}
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // frappe.ui.form.on('Bulk Payment Entry', {
 //     deduction_add: function(frm) {
